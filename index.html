@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PrevState</title>
+</head>
+<body>
+    <div id="react"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.8.4/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.4/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+    <script type="text/babel">
+        const {useState} = React;
+
+        const Example = ({title}) => {
+          const initialState = {
+            firstKey: 'empty',
+            secondKey: 'empty',
+            thirdKey: 'not empty',
+          }
+          const [object, setObject] = useState(initialState);
+
+          const withPrevState = () => {
+            setObject((prevState) => ({
+              ...prevState,
+              secondKey: 'not empty',
+            }));
+          }
+
+          return (
+            <div>
+              <h5>Updates Second key to 'not empty'</h5>
+              <p>First key: {object.firstKey}</p>
+              <p>Second key: {object.secondKey}</p>
+              <p>Third key: {object.thirdKey}</p>
+              <button onClick={withPrevState}>
+                Update with prevState
+              </button>
+              <button onClick={() => {setObject({secondKey: 'not empty'})}}>
+                Update without prevState
+              </button>
+              <button onClick={() => {setObject(initialState)}}>
+                Reset
+              </button>
+            </div>
+          );
+        };
+
+        // Render it
+        ReactDOM.render(
+          <Example title={"prevState"}/>,
+          document.getElementById("react")
+        );
+    </script>
+</body>
+</html>
+
